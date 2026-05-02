@@ -1,8 +1,9 @@
-const CACHE_NAME = "snake-ladder-journey-v11";
+const CACHE_NAME = "snake-ladder-journey-v12";
 const APP_SHELL = [
   "/",
   "/index.html",
   "/manifest.json",
+  "/icons/logo.svg",
   "/icons/icon-192.svg",
   "/icons/icon-512.svg"
 ];

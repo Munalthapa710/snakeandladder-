@@ -61,9 +61,7 @@ export function Lobby({ settings, onChange, onStart }: LobbyProps) {
 
         {step === "play" ? (
           <div className="play-screen">
-            <div className="play-emblem" aria-hidden="true">
-              <span />
-            </div>
+            <img className="play-logo" src="/icons/logo.svg" alt="Snake and Ladder" />
             <p className="eyebrow">Snake and Ladder</p>
             <h2>Journey Board</h2>
             <button className="play-button" type="button" onClick={() => setStep("mode")}>

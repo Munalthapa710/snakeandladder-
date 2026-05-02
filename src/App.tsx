@@ -209,6 +209,7 @@ export default function App() {
       <div className="app-frame">
         <header className="app-header">
           <div>
+            <img className="header-logo" src="/icons/logo.svg" alt="" aria-hidden="true" />
             <h1>Snake and Ladder Journey</h1>
           </div>
           {game ? (
