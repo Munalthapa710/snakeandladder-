@@ -200,6 +200,26 @@ describe("snake and ladder engine", () => {
     expect(state.phase).toBe("awaitingRoll");
     expect(state.log.at(-1)?.type).toBe("extra");
   });
+
+  it("does not give an extra turn for two dice when only one die is 6", () => {
+    let state = createTestState({ mode: "pvp", playerCount: 2, chipsPerPlayer: 1, diceCount: 2 });
+    state = withChip(state, "p1-c1", { status: "active", direction: "up", position: 1 });
+    state = applyMove(rollDice(state, [6, 3]), "p1-c1");
+
+    expect(state.currentPlayerIndex).toBe(1);
+    expect(state.phase).toBe("awaitingRoll");
+    expect(state.log.at(-1)?.type).not.toBe("extra");
+  });
+
+  it("gives an extra turn for two dice only when both dice are 6", () => {
+    let state = createTestState({ mode: "pvp", playerCount: 2, chipsPerPlayer: 1, diceCount: 2 });
+    state = withChip(state, "p1-c1", { status: "active", direction: "up", position: 1 });
+    state = applyMove(rollDice(state, [6, 6]), "p1-c1");
+
+    expect(state.currentPlayerIndex).toBe(0);
+    expect(state.phase).toBe("awaitingRoll");
+    expect(state.log.at(-1)?.type).toBe("extra");
+  });
 });
 
 function createTestState(overrides: Partial<LobbySettings> = {}): GameState {

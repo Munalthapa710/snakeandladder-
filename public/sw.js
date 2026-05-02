@@ -1,4 +1,4 @@
-const CACHE_NAME = "snake-ladder-journey-v9";
+const CACHE_NAME = "snake-ladder-journey-v10";
 const APP_SHELL = [
   "/",
   "/index.html",

@@ -235,7 +235,7 @@ export function hasEntryRoll(dice: DiceResult): boolean {
 }
 
 export function hasSixForExtraTurn(dice: DiceResult): boolean {
-  return dice.values.some((value) => value === 6);
+  return dice.values.length === 1 ? dice.values[0] === 6 : dice.values.every((value) => value === 6);
 }
 
 export function getCurrentPlayer(state: GameState): Player {

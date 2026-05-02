@@ -209,7 +209,6 @@ export default function App() {
       <div className="app-frame">
         <header className="app-header">
           <div>
-            <p className="eyebrow">Progressive Web App</p>
             <h1>Snake and Ladder Journey</h1>
           </div>
           {game ? (
