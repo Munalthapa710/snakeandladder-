@@ -156,15 +156,58 @@ describe("snake and ladder engine", () => {
       rules: { ...DEFAULT_RULES, sixExtraTurn: false, cutExtraTurn: false }
     });
     state = withChip(state, "p1-c1", { status: "active", direction: "up", position: 4 });
-    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 7 });
+    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 8 });
 
-    state = applyMove(rollDice(state, [3]), "p1-c1");
+    state = applyMove(rollDice(state, [4]), "p1-c1");
 
-    expect(getChip(state, "p1-c1").position).toBe(7);
+    expect(getChip(state, "p1-c1").position).toBe(8);
     expect(getChip(state, "p2-c1")).toMatchObject({
       status: "outside",
       position: null,
       direction: null
+    });
+  });
+
+  it("does not cut chips on cell 1 because it is a safe stack cell", () => {
+    let state = createTestState({
+      mode: "pvp",
+      playerCount: 2,
+      chipsPerPlayer: 1,
+      rules: { ...DEFAULT_RULES, sixExtraTurn: false, cutExtraTurn: false }
+    });
+    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 1 });
+
+    state = applyMove(rollDice(state, [1]), "p1-c1");
+
+    expect(getChip(state, "p1-c1")).toMatchObject({
+      status: "active",
+      position: 1
+    });
+    expect(getChip(state, "p2-c1")).toMatchObject({
+      status: "active",
+      position: 1
+    });
+  });
+
+  it("does not cut or force a cut on snake-tail safe cells", () => {
+    let state = createTestState({
+      mode: "pvp",
+      playerCount: 2,
+      chipsPerPlayer: 1,
+      rules: { ...DEFAULT_RULES, sixExtraTurn: false, cutExtraTurn: false }
+    });
+    state = withChip(state, "p1-c1", { status: "active", direction: "up", position: 4 });
+    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 7 });
+
+    state = rollDice(state, [3]);
+    expect(state.forcedCut).toBe(false);
+    expect(state.validMoves[0]?.canCut).toBe(false);
+
+    state = applyMove(state, "p1-c1");
+    expect(getChip(state, "p1-c1").position).toBe(7);
+    expect(getChip(state, "p2-c1")).toMatchObject({
+      status: "active",
+      position: 7
     });
   });
 
@@ -177,8 +220,8 @@ describe("snake and ladder engine", () => {
     });
     state = withChip(state, "p1-c1", { status: "active", direction: "up", position: 4 });
     state = withChip(state, "p1-c2", { status: "active", direction: "up", position: 10 });
-    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 7 });
-    state = rollDice(state, [3]);
+    state = withChip(state, "p2-c1", { status: "active", direction: "up", position: 8 });
+    state = rollDice(state, [4]);
 
     expect(state.forcedCut).toBe(true);
     const blocked = applyMove(state, "p1-c2");

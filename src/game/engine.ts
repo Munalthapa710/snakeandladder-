@@ -446,6 +446,10 @@ function buildMoveOption(state: GameState, chip: Chip): MoveOption | undefined {
 }
 
 function getCuttableOpponentChipIds(state: GameState, playerId: string, position: number): string[] {
+  if (isSafeStackCell(state, position)) {
+    return [];
+  }
+
   return state.players.flatMap((player) => {
     if (player.id === playerId) {
       return [];
@@ -455,6 +459,10 @@ function getCuttableOpponentChipIds(state: GameState, playerId: string, position
       .filter((chip) => chip.status === "active" && chip.position === position)
       .map((chip) => chip.id);
   });
+}
+
+function isSafeStackCell(state: GameState, position: number): boolean {
+  return position === 1 || Object.values(state.board.snakes).includes(position);
 }
 
 function applyMoveToPlayers(players: Player[], option: MoveOption): Player[] {

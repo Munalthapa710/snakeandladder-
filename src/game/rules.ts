@@ -40,7 +40,7 @@ export const RULE_LABELS: Record<keyof RuleSettings, string> = {
 };
 
 export const RULE_DESCRIPTIONS: Record<keyof RuleSettings, string> = {
-  canEat: "Opponent chips on the landing cell are sent outside.",
+  canEat: "Opponent chips are sent outside, except on cell 1 and snake-tail safe cells where chips stack.",
   sixExtraTurn: "With two dice, both dice must show 6 to grant the extra turn.",
   oneToEnter: "With two dice, any die showing 1 or 6 can bring a chip to cell 1.",
   tripleOnePenalty: "A player chooses one active own chip to send outside after the third consecutive 1 roll.",
